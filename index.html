@@ -4,14 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!--- Google Fonts --->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/script.js defer"></script>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <script src="js/app.js" defer></script>
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
     
     <title>Tic Tac Toe</title>
     
 </head>
 <body>
-    
+    <header id="header" class="flex flex-columns align-items-center">
+        <h1 class="title">Tic Tac Toe</h1>
+        <button id="start-game" class="btn-start-game">Start Game</button>
+    </header>
+    <main>
+        
+        <section id="board-container" class="board-container">
+            <div id="board" class="board">
+                
+            </div>
+            
+        </section>
+
+        <div id="game-controls" class="game-controls">
+
+        </div>
+
+        <section id="score-container" class="score-container">
+            <div id="score-player-one" class="score score-player-one">
+
+            </div>
+            <div id="score-round" class="score score-round">
+
+            </div>
+            <div id="score-player-two" class="score score-player-two">
+
+            </div>
+        </section>
+    </main>
 </body>
 </html>

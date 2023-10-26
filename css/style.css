@@ -1,0 +1,212 @@
+/*=== CSS VARIABLES ===*/
+
+:root {
+
+  /* Colors */
+
+  --primary-100: hsl(348, 100%, 96%);
+  --primary-200: hsl(347, 100%, 87%);
+  --primary-300: hsl(340, 93%, 74%);
+  --primary-400: hsl(340, 88%, 70%);
+  --primary-500: hsl(330, 81%, 60%);
+  --primary-600: hsl(335, 78%, 42%);
+  --primary-700: hsl(336, 74%, 35%);
+  --primary-800: hsl(337, 54%, 28%);
+  --primary-900: hsl(338, 59%, 17%);
+
+  --shadow: 0 10px 10px rgba(0, 0, 0, .5);
+
+
+  /* Fonts */
+  --ff-primary: 'Open Sans', sans-serif;
+
+  --fs-400: 1rem;
+  --fs-700: 2.5em;
+  --fs-900: 4em;
+
+  --fw-normal: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  --spacing-xs: .5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 4rem;
+
+  --br-sm: .25em;
+  --br-md: .5em;
+  --br-lg: 1.5em;
+
+  --cell-size: 100px;
+  --mark-size: calc((var(--cell-size) * .80));
+}
+
+/*=== CSS RESET ===*/
+
+/* makes sizing simpler */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* remove default spacing */
+/* force styling of type through styling, rather than elements */
+
+* {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+}
+
+/* min body height */
+
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+/* responsive images/videos */
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+/*=== GENERAL STYLES ===*/
+
+body {
+  font-family: var(--ff-primary);
+  font-size: var(--fs-400);
+  font-weight: var(--fw-normal);
+  color: var(--primary-800);
+  background-color: var(--primary-900);
+}
+
+/*=== GAME START ===*/
+
+.title {
+  font-size: var(--fs-900);
+  font-weight: var(--fw-bold);
+  color: var(--primary-600);
+}
+.btn-start-game {
+  cursor: pointer;
+  padding: var(--spacing-xs) var(--spacing-md);
+  font-weight: var(--fw-medium);
+  color: var(--primary-100);
+  background-color: var(--primary-600);
+  border: 0;
+  border-radius: var(--br-md);
+  box-shadow: var(--shadow);
+}
+
+.btn-start-game:hover,
+.btn-start-game:focus {
+  color: var(--primary-300);
+  background-color: var(--primary-800);
+  box-shadow: none;
+}
+
+/*=== GAME BOARD ===*/
+
+.board-container {
+  display: flex;
+  justify-content: center;
+}
+
+.board {
+  display: grid;
+  width: 300px;
+  height: 300px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-sm);
+}
+
+.cell {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cell-size);
+  height: var(--cell-size);
+  background-color: var(--primary-800);
+  border: 1px solid var(--primary-900);
+  border-radius: var(--br-md);
+  box-shadow: var(--shadow);
+}
+
+.cell:hover,
+.cell.focus {
+  background-color: var(--primary-700);
+  box-shadow: none;
+}
+
+.circle,
+.cross {
+  cursor: not-allowed;
+}
+
+.circle {
+  width: var(--mark-size);
+  height: var(--mark-size);
+  border-radius: 50%;
+  border: 8px solid blue;
+}
+
+.cross {
+  width: var(--mark-size);
+  height: var(--mark-size);
+  position: relative;
+  transform: rotate(45deg);
+}
+
+.cross:before, 
+.cross:after {
+content: "";
+position: absolute;
+background-color: red;
+}
+
+.cross:before {
+  left: 50%;
+  width: 25%;
+  height: 100%;
+  margin-left: -12.5%;
+}
+
+.cross:after {
+  top: 50%;
+  width: 100%;
+  height: 25%;
+  margin-top: -12.5%;
+}
+
+/*=== UTILITY CLASSES ===*/
+
+.flex {
+  display: flex;
+}
+.flex-columns {
+  flex-direction: column;
+}
+.align-items-center {
+  align-items: center;
+}
+.justify-content-center {
+  justify-content: center;
+}
+.mb-sm {
+  margin-bottom: var(--spacing-sm);
+}
+.mb-md {
+  margin-bottom: var(--spacing-md);
+}
+.mb-lg {
+  margin-bottom: var(--spacing-lg);
+}
