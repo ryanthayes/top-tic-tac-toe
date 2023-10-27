@@ -8,46 +8,82 @@
 
 // If you need multiples of something (players!), create them with factories.
 
+const pvpBtn = document.querySelector('#btn-pvp');
+const pveBtn = document.querySelector('#btn-pve');
+
+const startModal = document.querySelector('#start__modal')
+const form = document.querySelector("#form");
+const board = document.querySelector('#board-grid');
+const startBtnContainer = document.querySelector('#start__btn-container');
+const boardContainer = document.querySelector('#board-container');
+const scoreContainer = document.querySelector('#score-container')
 const infoDisplay = document.querySelector("#score-player-one")
 
-const gameBoard = (() => {
+const displayController = (() => {
     
-    const boardContainer = document.querySelector('#board');
-    const board = [
+    pvpBtn.addEventListener('click', () => {
+       startModal.style.display = 'none';
+       game.start();
+    });
+
+    pveBtn.addEventListener('click', () => {
+        startModal.style.display = 'none';
+        game.start();
+    });
+});
+
+const gameBoard = (() => {
+
+    const boardArray = [
         "", "", "", 
         "", "", "", 
-        "", "", ""];
+        "", "", ""
+    ];
     
     const renderBoard = () => {
-        boardContainer.innerText = "";
-        board.forEach((square, index) => {
+        board.innerText = "";
+        boardArray.forEach((square, index) => {
             const cell = document.createElement('div')
             cell.classList.add('cell');
             cell.setAttribute('data-index', index);
             cell.addEventListener('click', game.createMark, { once: true });
-            boardContainer.appendChild(cell);
+            board.appendChild(cell);
         })
     };
 
+    const resetBoard = () => {
+        boardArray = [
+            "", "", "", 
+            "", "", "", 
+            "", "", ""
+        ];
+
+    }
+
+    // Allow other functions to access gameBoard
+    const getGameBoard = () => gameBoard;
+    
     return {
         renderBoard,
+        resetBoard,
+        getGameBoard,
     }
 
 })();
 
-const createPlayer = (name, mark) => {
-    return {
-        name, 
-        mark
-    }
-};
+
 
 const game = (() => {
 
     let players = [];
     let placeMark = "cross";
 
-    const form = document.querySelector("#form");
+    const createPlayer = (name, mark) => {
+        return {
+            name, 
+            mark
+        }
+    };
 
     const start = () => {
         players = [
@@ -76,4 +112,47 @@ const game = (() => {
 
 })();
 
-game.start();
+const checkScore = (board) => {
+    const allCells = document.querySelectorAll(".cell");
+    const winningCombos = [
+        [0,1,2], 
+        [3,4,5], 
+        [6,7,8], 
+        [0,3,6], 
+        [1,4,7], 
+        [2,5,8], 
+        [0,4,8], 
+        [2,4,6] 
+    ];
+    
+    winningCombos.forEach(array => {
+        const playerOneWins = array.every(cell => allCells[cell].firstChild?.classList.contains('cross'));
+
+        if (playerOneWins) {
+            alert('Player One Wins');
+            return
+        }
+    });
+
+    winningCombos.forEach(array => {
+        const playerTwoWins = array.every(cell => allCells[cell].firstChild?.classList.contains('circle'));
+
+        if (playerTwoWins) {
+            alert('Player Two Wins');
+            return
+        }
+    });
+
+    winningCombos.forEach(array => {
+        const playerOneWins = array.every(cell => allCells[cell].firstChild?.classList.contains('cross'));
+
+        if (playerOneWins) {
+            alert('Player One Wins');
+            return
+        }
+    });
+
+
+};
+
+displayController();
