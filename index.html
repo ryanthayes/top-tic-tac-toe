@@ -21,7 +21,7 @@
         <h1 class="title">Tic Tac Toe</h1>
         <button id="start-game" class="btn-start-game">Start Game</button>
     </header>
-    <main>
+    <main class="flex flex-columns align-items-center">
         
         <section id="board-container" class="board-container">
             <div id="board" class="board">
@@ -31,7 +31,13 @@
         </section>
 
         <div id="game-controls" class="game-controls">
-
+            <form id="form" action="">
+                <label for="player1">Player 1</label>
+                <input type="text" name="player1" id="player1">
+                <label for="player2">Player 2</label>
+                <input type="text" name="player2" id="player2">
+                <button type="submit" id="btn-start-game">Start Game</button>
+            </form>
         </div>
 
         <section id="score-container" class="score-container">

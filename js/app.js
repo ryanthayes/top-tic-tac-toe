@@ -8,6 +8,8 @@
 
 // If you need multiples of something (players!), create them with factories.
 
+const infoDisplay = document.querySelector("#score-player-one")
+
 const gameBoard = (() => {
     
     const boardContainer = document.querySelector('#board');
@@ -22,23 +24,56 @@ const gameBoard = (() => {
             const cell = document.createElement('div')
             cell.classList.add('cell');
             cell.setAttribute('data-index', index);
-            cell.addEventListener('click', () => {
-                console.log("I am clicked!");
-            })
+            cell.addEventListener('click', game.createMark, { once: true });
             boardContainer.appendChild(cell);
         })
     };
-   
+
     return {
         renderBoard,
     }
 
 })();
 
-gameBoard.renderBoard();
+const createPlayer = (name, mark) => {
+    return {
+        name, 
+        mark
+    }
+};
 
-// const game = (() => {
+const game = (() => {
 
-//     const players = [];
+    let players = [];
+    let placeMark = "cross";
 
-// })();
+    const form = document.querySelector("#form");
+
+    const start = () => {
+        players = [
+            createPlayer("player1", "X"),
+            createPlayer("player2", "O"),
+        ]
+        gameBoard.renderBoard();
+    };
+
+    function swapTurns() {
+        placeMark = placeMark === "cross" ? "circle" : "cross";
+    };
+
+    const createMark = e => {
+        const cell = e.target;
+        const mark = document.createElement('div');
+        mark.classList.add(placeMark);
+        cell.append(mark);
+        swapTurns();
+        checkScore();
+    }
+    return {
+        start,
+        createMark
+    };
+
+})();
+
+game.start();

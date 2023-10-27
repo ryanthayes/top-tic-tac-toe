@@ -39,7 +39,7 @@
   --br-lg: 1.5em;
 
   --cell-size: 100px;
-  --mark-size: calc((var(--cell-size) * .80));
+  --mark-size: calc((var(--cell-size) * .60));
 }
 
 /*=== CSS RESET ===*/
@@ -84,7 +84,11 @@ body {
   font-size: var(--fs-400);
   font-weight: var(--fw-normal);
   color: var(--primary-800);
-  background-color: var(--primary-900);
+  background-image: radial-gradient(var(--primary-700), var(--primary-900));
+}
+
+main {
+  gap: var(--spacing-lg);
 }
 
 /*=== GAME START ===*/
@@ -156,7 +160,7 @@ body {
   width: var(--mark-size);
   height: var(--mark-size);
   border-radius: 50%;
-  border: 8px solid blue;
+  border: 8px solid var(--primary-400);
 }
 
 .cross {
@@ -170,7 +174,7 @@ body {
 .cross:after {
 content: "";
 position: absolute;
-background-color: red;
+background-color: var(--primary-500);
 }
 
 .cross:before {
@@ -186,6 +190,10 @@ background-color: red;
   height: 25%;
   margin-top: -12.5%;
 }
+
+/*=== SCORE BOARD ===*/
+
+
 
 /*=== UTILITY CLASSES ===*/
 
