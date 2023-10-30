@@ -8,151 +8,200 @@
 
 // If you need multiples of something (players!), create them with factories.
 
-const pvpBtn = document.querySelector('#btn-pvp');
-const pveBtn = document.querySelector('#btn-pve');
+const allCells = document.querySelectorAll('.cell');
 
-const startModal = document.querySelector('#start__modal')
-const form = document.querySelector("#form");
-const board = document.querySelector('#board-grid');
-const startBtnContainer = document.querySelector('#start__btn-container');
-const boardContainer = document.querySelector('#board-container');
-const scoreContainer = document.querySelector('#score-container')
-const infoDisplay = document.querySelector("#score-player-one")
+const startGameModal = document.querySelector('#start-game')
+const startBtnContainer = document.querySelector('#start-game__btn-container');
+const gameBoard = document.querySelector('#game-board');
+const gameInfo = document.querySelector('#game-info')
+const endGameModal = document.querySelector('#end-game__modal');
+const endGameInfo = document.querySelector("#end-game__info")
+
+// Create array to hold board state
+let board = [
+    ['', '', ''],
+    ['', '', ''],
+    ['', '', '']
+];
 
 const displayController = (() => {
+
+    const pvpBtn = document.querySelector('#btn-pvp');
+    const pveBtn = document.querySelector('#btn-pve');
+    const restartBtn = document.querySelector('#btn-restart');
     
+    // When button is clicked, start screen hides, game play screen appears
     pvpBtn.addEventListener('click', () => {
-       startModal.style.display = 'none';
-       game.start();
+       startGameModal.style.display = 'none';
+       setBoard.renderBoard();
     });
 
     pveBtn.addEventListener('click', () => {
-        startModal.style.display = 'none';
-        game.start();
+        startGameModal.style.display = 'none';
+        setBoard.renderBoard();
     });
+
+    // Prevent ESC key from closing dialog modal
+    endGameModal.addEventListener('cancel', (event) => {
+        event.preventDefault();
+    });
+
+    restartBtn.addEventListener('click', () => {
+        setBoard.resetBoard();
+        endGameModal.close();
+    })
 });
 
-const gameBoard = (() => {
-
-    const boardArray = [
-        "", "", "", 
-        "", "", "", 
-        "", "", ""
-    ];
+const setBoard = (() => {
     
     const renderBoard = () => {
-        board.innerText = "";
-        boardArray.forEach((square, index) => {
-            const cell = document.createElement('div')
-            cell.classList.add('cell');
+        allCells.forEach((cell, index) => {
             cell.setAttribute('data-index', index);
-            cell.addEventListener('click', game.createMark, { once: true });
-            board.appendChild(cell);
-        })
+            cell.addEventListener('click', () => {
+                playRound.placeMark(index);
+            })
+        }) 
     };
 
     const resetBoard = () => {
-        boardArray = [
-            "", "", "", 
-            "", "", "", 
-            "", "", ""
+        board = [
+            ['', '', ''],
+            ['', '', ''],
+            ['', '', '']
         ];
-
-    }
-
-    // Allow other functions to access gameBoard
-    const getGameBoard = () => gameBoard;
+        currentPlayer = playerOne;
+        gameOver = false;
+        allCells.forEach(cell => {
+            cell.innerText = '';
+        });
+    };
     
     return {
         renderBoard,
         resetBoard,
-        getGameBoard,
-    }
+    };
 
 })();
 
+const playerOne = 'cross';
+const playerTwo = 'circle'
+let currentPlayer = playerOne;
+let gameOver = false;
 
+const playRound = (() => {
 
-const game = (() => {
+    const createMark = () => {
+        // Iterate over rows
+        for (let row = 0; row < 3; row++) {
+            // Iterate over columns
+            for (let col = 0; col < 3; col++) {
+                if (board[row][col] === 'cross') {
+                    // Update cell class to include cross
+                    allCells[(row * 3) + col].innerText = (playerOne);
 
-    let players = [];
-    let placeMark = "cross";
-
-    const createPlayer = (name, mark) => {
-        return {
-            name, 
-            mark
+                } else if (board[row][col] === 'circle') {
+                    // Update cell class to include circle
+                    allCells[(row * 3) + col].innerText = (playerTwo);
+                }
+            }
         }
-    };
-
-    const start = () => {
-        players = [
-            createPlayer("player1", "X"),
-            createPlayer("player2", "O"),
-        ]
-        gameBoard.renderBoard();
-    };
-
-    function swapTurns() {
-        placeMark = placeMark === "cross" ? "circle" : "cross";
-    };
-
-    const createMark = e => {
-        const cell = e.target;
-        const mark = document.createElement('div');
-        mark.classList.add(placeMark);
-        cell.append(mark);
-        swapTurns();
-        checkScore();
     }
+
+    const swapTurns = () => {
+        currentPlayer = currentPlayer === playerOne ? playerTwo : playerOne;
+    };
+
+    // Create a function for placing markers
+    const placeMark = (index) => {
+        // Determine row and column index
+        const col = index % 3;
+        const row = (index - col) / 3;
+        // Check if current cell is empty
+        if (board[row][col] == 0 && gameOver === false) {
+            board[row][col] = currentPlayer;
+            createMark();
+            checkForWinner();
+            swapTurns();
+        }
+        return
+    }
+
     return {
-        start,
-        createMark
+        placeMark
     };
 
 })();
 
-const checkScore = (board) => {
-    const allCells = document.querySelectorAll(".cell");
+const checkForWinner = () => {
     const winningCombos = [
-        [0,1,2], 
-        [3,4,5], 
-        [6,7,8], 
-        [0,3,6], 
-        [1,4,7], 
-        [2,5,8], 
-        [0,4,8], 
-        [2,4,6] 
+        [0,1,2],
+        [3,4,5],
+        [6,7,8],
+        [0,3,6],
+        [1,4,7],
+        [2,5,8],
+        [0,4,8],
+        [2,4,6]
     ];
     
-    winningCombos.forEach(array => {
-        const playerOneWins = array.every(cell => allCells[cell].firstChild?.classList.contains('cross'));
-
-        if (playerOneWins) {
-            alert('Player One Wins');
+    // check for rows
+    for (let i = 0; i < 3; i++) {
+        if (board[i][0] === board[i][1] && board[i][0] === board[i][2] && board[i][0] !== '') {
+            const displayWinner = document.createElement('p')
+            displayWinner.innerText = `${currentPlayer} Wins!`;
+            endGameInfo.appendChild(displayWinner);
+            endGameModal.showModal();
+            gameOver = true;
             return
         }
-    });
-
-    winningCombos.forEach(array => {
-        const playerTwoWins = array.every(cell => allCells[cell].firstChild?.classList.contains('circle'));
-
-        if (playerTwoWins) {
-            alert('Player Two Wins');
+    };
+    // check for columns
+    for (let i = 0; i < 3; i++) {
+        if (board[0][i] === board[1][i] && board[0][i] === board[2][i] && board[0][i] !== '') {
+            const displayWinner = document.createElement('p')
+            displayWinner.innerText = `${currentPlayer} Wins!`;
+            endGameInfo.appendChild(displayWinner);
+            endGameModal.showModal();
+            gameOver = true;
             return
         }
-    });
+    };
+    // check for diagonals
+    if (board[0][0] === board[1][1] && board[0][0] === board[2][2] && board[0][0] !== '') {
+        const displayWinner = document.createElement('p')
+        displayWinner.innerText = `${currentPlayer} Wins!`;
+        endGameInfo.appendChild(displayWinner);
+        endGameModal.showModal();
+        gameOver = true;
+        return
+    };
+    if (board[0][2] === board[1][1] && board[0][2] === board[2][0] && board[0][2] !== '') {
+        const displayWinner = document.createElement('p')
+        displayWinner.innerText = `${currentPlayer} Wins!`;
+        endGameInfo.appendChild(displayWinner);
+        endGameModal.showModal();
+        gameOver = true;
+        return
+    };
 
-    winningCombos.forEach(array => {
-        const playerOneWins = array.every(cell => allCells[cell].firstChild?.classList.contains('cross'));
-
-        if (playerOneWins) {
-            alert('Player One Wins');
-            return
+    // check for a tie
+    // if all cells are filled and no winner
+    var count = 0;
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            if (board[i][j] != '') {
+                count++;
+            }
         }
-    });
-
-
+    };
+    if (count == 9) {
+        const displayWinner = document.createElement('p')
+        displayWinner.innerText = `DRAW!`;
+        endGameInfo.appendChild(displayWinner);
+        endGameModal.showModal();
+        gameOver = true;
+        return
+    };
 };
 
 displayController();

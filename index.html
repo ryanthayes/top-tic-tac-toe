@@ -18,74 +18,44 @@
 </head>
 <body>
     <div class="wrapper flex flex-columns align-items-center justify-content-center">
-        <header id="header" class="header flex align-items-center mb-md">
-            <h1 class="title">Tic Tac Toe</h1>
-            <svg  class="btn-reset" xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24"><path fill="" d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89l.07.14L9 12H6a7 7 0 0 1 7-7a7 7 0 0 1 7 7a7 7 0 0 1-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.896 8.896 0 0 0 13 21a9 9 0 0 0 9-9a9 9 0 0 0-9-9Z"/></svg>
-        </header>
-        <main class="flex flex-columns align-items-center">
+        <main>
             
-            <section id="board-container" class="board-container mb-md">
-                <div id="board-grid" class="board-grid">
-                    
+            <section id="game-container" class="game-container flex flex-columns align-items-center">
+                <div class="game-header">
+                    <h1 class="game-title">Tic Tac Toe</h1>
                 </div>
-            </section>
-            
-            <section id="score-container" class="score-container flex align align-items-center">
-                <div id="score-player-X" class="score score-player-x">
-                    <h2 class="score-title">
-                        Player X
-                    </h2>
-                    <p class="score-result__player-x">0</p>
+                <div id="game-board" class="game-board mb-md">
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
                 </div>
-                <div id="score-tie" class="score score-tie">
-                    <h2 class="score-title">
-                        Ties   
-                    </h2>
-                    <p class="score-result__tie">0</p>
-                </div>
-                <div id="score-player-o" class="score score-player-o">
-                    <h2 class="score-title">
-                        Player O
-                    </h2>
-                    <p class="score-result__player-o">0</p>
+                <div id="game-info" class="game-info">
+
                 </div>
             </section>
 
-            <section id="start__modal" class="start__modal">
-                <h2 class="start__title">Tic Tac Toe</h2>
-                <div id="start__btn-container" class="start__btn-container">
+            <div id="start-game" class="start-game">
+                <h2 class="start-game__title">Tic Tac Toe</h2>
+                <div id="start-game__btn-container" class="start-game__btn-container">
                     <button id="btn-pvp" class="btn btn-pvp">VS Mode</button>
                     <button id="btn-pve" class="btn btn-pve">AI Mode</button>
                 </div>
-            </section>
-               
-            <!-- <section class="start-screen">
-                <dialog class="start-screen__modal">
-                    <h2 class="start-screen__title">Tic Tac Toe</h2>
-                    <div class="start-screen__choices-container flex flex-columns align-items-center">
-                        <h3 class="start-screen__choices-title">Player 1 Choose A Mark</h3>
-                        <div class="start-screen__choices flex">
-                            <label for="select-x" class="select-
-                            x__label">
-                                <div class="start-cross">
-                                </div>
-                            </label>
-                            <input type="radio" name="select-x" class="start-screen__select-x" id="select-x" >
-                            <label for="select-o" class="select-
-                            o__label">
-                            <div class="start-circle">
-                            </div>
-                            </label>
-                            <input type="radio" name="select-o" class="start-screen__select-o" id="select-o" >
-                        </div>
-                        <p class="start-screen__tip">Remember: X Goes First</p>
-                    </div>
-                    <button id="btn-start" class="btn btn-start">Let's Play</button>
-                    <button id="btn-pvp" class="btn-pvp">VS Mode</button>
-                    <button id="btn-pve" class="btn-pve">AI Mode</button>
-                </dialog>
-            </section> -->
-            
+            </div>
+
+            <dialog id="end-game__modal" class="end-game__modal">
+                <div id="end-game__info" class="end-game__info">
+
+                </div>
+                <button id="btn-restart" class="
+                btn btn-restart">Play Again?</button>
+            </dialog>
+           
         </main>
     </div>
     

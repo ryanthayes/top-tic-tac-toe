@@ -15,7 +15,6 @@
   --primary-900: hsl(338, 59%, 17%);
 
   --shadow: 0 5px 5px rgba(0, 0, 0, .3);
-  --shadow-s: 0 5px 5px rgba(0, 0, 0, .3);
 
 
   /* Fonts */
@@ -100,21 +99,9 @@ main {
   gap: var(--spacing-lg);
 }
 
-.title {
-  font-size: var(--fs-700);
-  font-weight: var(--fw-bold);
-  color: var(--primary-600);
-  text-shadow: var(--shadow);
-}
-
-.btn-reset {
-  fill: var(--primary-600);
-  background: var(--primary-800);
-}
-
 /*=== GAME START ===*/
 
-.start__modal {
+.start-game {
   position: absolute;
   inset: 0;
   width: 100vw;
@@ -128,66 +115,36 @@ main {
   border: 0;
 }
 
-.start__title {
+.start-game__title {
   font-size: var(--fs-900);
   font-weight: var(--fw-bold);
   color: var(--primary-600);
   text-shadow: var(--shadow);
 }
 
-.start__choices-container {
-  width: 50%;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-md) var(--spacing-lg);
-  color: var(--primary-200);
-  background-color: var(--primary-700);
-  border-radius: var(--br-md);
-  box-shadow: var(--shadow);
-}
-
-.start__btn-container {
+.start-game__btn-container {
   display: flex;
   gap: var(--spacing-md);
 }
 
-.start__choices-title {
-  font-size: var(--fs-500);
-  font-weight: var(--fw-bold);
-  text-transform: uppercase;
-}
-.start__tip {
-  font-weight: var(--fw-semibold);
-}
-
-.start__title,
-.start__choices-title,
-.start__tip {
-  text-align: center;
-}
-
-.start__choices {
-  gap: var(--spacing-sm);
-  padding: var(--spacing-sm);
-  background-color: var(--primary-800);
-  border-radius: var(--br-sm);
-}
-
-.start__select-x,
-.start__select-o  {
-  appearance: none;
-} 
-
 /*=== GAME BOARD ===*/
 
-.board-container {
-  display: flex;
-  justify-content: center;
+.game-title {
+  font-size: var(--fs-900);
+  font-weight: var(--fw-bold);
+  text-align: center;
+  color: var(--primary-600);
+  text-shadow: var(--shadow);
 }
 
-.board-grid {
+.game-container {
+  display: flex;
+  justify-content: center;
+  padding: var(--spacing-md);
+}
+
+.game-board {
   display: grid;
-  width: 300px;
-  height: 300px;
   grid-template-columns: repeat(3, 1fr);
   grid-template-columns: repeat(3, 1fr);
   gap: var(--spacing-sm);
@@ -203,6 +160,8 @@ main {
   background-color: var(--primary-800);
   border-radius: var(--br-md);
   box-shadow: var(--shadow);
+
+  color: var(--primary-100);
 }
 
 .cell:hover,
@@ -269,44 +228,35 @@ background-color: var(--primary-600);
   transform: scale(90%);
 }
 
-/*=== SCORE BOARD ===*/
+/*=== END GAME MODAL ===*/
 
-.score-container {
+.end-game__modal[open] {
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  display: flex;
+  flex-direction: column;
   gap: var(--spacing-sm);
-  padding: var(--spacing-sm);
+  padding: var(--spacing-md);
   background-color: var(--primary-800);
+  border: 0;
   border-radius: var(--br-md);
   box-shadow: var(--shadow);
 }
 
-.score-title {
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
+dialog::backdrop {
+  background-color: rgb(0 0 0 / 0.6);
 }
 
-.score {
-  height: 75px;
-  aspect-ratio: 2 / 1;
-  padding: var(--spacing-sm);
+.end-game__info {
+  font-size: var(--fs-700);
+  font-weight: var(--fw-semibold);
   text-align: center;
-  color: var(--primary-100);
-  border-radius: var(--br-md);
+  color: var(--primary-300);
 }
 
-.score-player-x {
-  background-color: var(--primary-600);
-}
-.score-tie {
-  background-color: var(--primary-500);
-}
-.score-player-o {
-  background-color: var(--primary-600);
-}
-
-@media (max-width: 35em) {
-  .score-container {
-    flex-direction: column;
-  }
+.winner {
+  background-color: var(--primary-200);
 }
 
 /*=== BUTTONS ===*/
@@ -341,6 +291,11 @@ background-color: var(--primary-600);
   box-shadow: none;
 }
 
+.btn-reset {
+  fill: var(--primary-600);
+  background: var(--primary-800);
+}
+
 /*=== UTILITY CLASSES ===*/
 
 .wrapper {
@@ -368,19 +323,4 @@ background-color: var(--primary-600);
 }
 .mb-lg {
   margin-bottom: var(--spacing-lg);
-}
-.sr-only {
-  .sr-only {
-    border: 0 !important;
-    clip: rect(1px, 1px, 1px, 1px) !important; 
-    -webkit-clip-path: inset(50%) !important;
-      clip-path: inset(50%) !important;  
-    height: 1px !important;
-    margin: -1px !important;
-    overflow: hidden !important;
-    padding: 0 !important;
-    position: absolute !important;
-    width: 1px !important;
-    white-space: nowrap !important;
-  }
 }
