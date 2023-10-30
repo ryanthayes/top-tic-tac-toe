@@ -45,6 +45,20 @@
   --mark-size: calc((var(--cell-size) * .60));
 }
 
+@media (max-width: 35em) {
+  :root {
+      --fs-200: .5rem;
+      --fs-300: .75rem;
+      --fs-400: .875rem;
+      --fs-500: 1rem;
+      --fs-600: 1.5rem;
+      --fs-700: 2rem;
+      --fs-800: 2.5rem;
+      --fs-900: 3rem;
+  }
+}
+
+
 /*=== CSS RESET ===*/
 
 /* makes sizing simpler */
@@ -128,8 +142,6 @@ main {
   gap: var(--spacing-md);
 }
 
-
-
 /*=== GAME BOARD ===*/
 
 .game-title {
@@ -148,8 +160,8 @@ main {
 
 .game-board {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, minmax(75px, 100px));
+  grid-template-columns: repeat(3, minmax(75px, 100px));
   gap: var(--spacing-sm);
 }
 
@@ -158,8 +170,6 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--cell-size);
-  height: var(--cell-size);
   font-size: var(--fs-900);
   color: var(--primary-300);
   background-color: var(--primary-800);

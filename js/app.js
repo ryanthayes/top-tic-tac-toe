@@ -14,6 +14,10 @@ const endGameModal = document.querySelector('#end-game__modal');
 const endGameInfo = document.querySelector("#end-game__info")
 const gameBoard = document.querySelector('#game-board');
 
+const playerOne = 'X';
+const playerTwo = 'O'
+let currentPlayer = playerOne;
+let gameOver = false;
 
 // Create array to hold board state
 let board = [
@@ -64,7 +68,6 @@ const setBoard = (() => {
         }) 
     };
 
-
     const resetBoard = () => {
         board = [
             ['', '', ''],
@@ -85,11 +88,6 @@ const setBoard = (() => {
     };
 
 })();
-
-const playerOne = 'X';
-const playerTwo = 'O'
-let currentPlayer = playerOne;
-let gameOver = false;
 
 const playRound = (() => {
     
