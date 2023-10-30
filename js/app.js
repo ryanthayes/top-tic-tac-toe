@@ -9,13 +9,11 @@
 // If you need multiples of something (players!), create them with factories.
 
 const allCells = document.querySelectorAll('.cell');
-
-const startGameModal = document.querySelector('#start-game')
-const startBtnContainer = document.querySelector('#start-game__btn-container');
-const gameBoard = document.querySelector('#game-board');
 const gameInfo = document.querySelector('#game-info')
 const endGameModal = document.querySelector('#end-game__modal');
 const endGameInfo = document.querySelector("#end-game__info")
+const gameBoard = document.querySelector('#game-board');
+
 
 // Create array to hold board state
 let board = [
@@ -25,6 +23,9 @@ let board = [
 ];
 
 const displayController = (() => {
+
+    const startGameModal = document.querySelector('#start-game')
+    const startBtnContainer = document.querySelector('#start-game__btn-container');
 
     const pvpBtn = document.querySelector('#btn-pvp');
     const pveBtn = document.querySelector('#btn-pve');
@@ -37,19 +38,19 @@ const displayController = (() => {
     });
 
     pveBtn.addEventListener('click', () => {
-        startGameModal.style.display = 'none';
-        setBoard.renderBoard();
-    });
-
-    // Prevent ESC key from closing dialog modal
-    endGameModal.addEventListener('cancel', (event) => {
-        event.preventDefault();
+        alert(`Under Construction`);
     });
 
     restartBtn.addEventListener('click', () => {
         setBoard.resetBoard();
         endGameModal.close();
     })
+    
+    // Prevent ESC key from closing dialog modal
+    endGameModal.addEventListener('cancel', (event) => {
+        event.preventDefault();
+    });
+
 });
 
 const setBoard = (() => {
@@ -63,6 +64,7 @@ const setBoard = (() => {
         }) 
     };
 
+
     const resetBoard = () => {
         board = [
             ['', '', ''],
@@ -74,32 +76,33 @@ const setBoard = (() => {
         allCells.forEach(cell => {
             cell.innerText = '';
         });
+        endGameInfo.innerHTML = '';
     };
     
     return {
         renderBoard,
-        resetBoard,
+        resetBoard
     };
 
 })();
 
-const playerOne = 'cross';
-const playerTwo = 'circle'
+const playerOne = 'X';
+const playerTwo = 'O'
 let currentPlayer = playerOne;
 let gameOver = false;
 
 const playRound = (() => {
-
+    
     const createMark = () => {
         // Iterate over rows
         for (let row = 0; row < 3; row++) {
             // Iterate over columns
             for (let col = 0; col < 3; col++) {
-                if (board[row][col] === 'cross') {
+                if (board[row][col] === 'X') {
                     // Update cell class to include cross
                     allCells[(row * 3) + col].innerText = (playerOne);
 
-                } else if (board[row][col] === 'circle') {
+                } else if (board[row][col] === 'O') {
                     // Update cell class to include circle
                     allCells[(row * 3) + col].innerText = (playerTwo);
                 }
@@ -127,12 +130,13 @@ const playRound = (() => {
     }
 
     return {
-        placeMark
+        placeMark,
     };
 
 })();
 
 const checkForWinner = () => {
+    
     const winningCombos = [
         [0,1,2],
         [3,4,5],
